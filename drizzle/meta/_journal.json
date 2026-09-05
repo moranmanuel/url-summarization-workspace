@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1788650043483,
+      "tag": "0000_futuristic_hedge_knight",
+      "breakpoints": true
+    }
+  ]
+}
