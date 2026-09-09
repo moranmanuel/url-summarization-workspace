@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import {
   ArrowUpRight,
-  Link2,
+  Link,
   ExternalLink,
   Copy,
   Download,
@@ -31,6 +31,7 @@ import type { Session } from '@/lib/types';
 import { SessionList } from './session-list';
 import { ChatPanel } from './chat-panel';
 import { Markdown } from './markdown';
+
 export function Workspace() {
   const app = useWorkspace();
   useWorkspaceTools(app);
@@ -64,7 +65,10 @@ export function Workspace() {
   return (
     <SidebarProvider
       className="workspace"
-      style={{ '--sidebar-width': '252px' } as React.CSSProperties}
+      style={{
+        '--sidebar-width': '252px',
+        '--sidebar-width-icon': '64px'
+      } as React.CSSProperties}
     >
       <SessionList
         sessions={app.sessions}
@@ -90,8 +94,6 @@ export function Workspace() {
         className={`main-surface ${chatOpen && session ? 'chat-open' : ''}`}
       >
         <header className="workspace-header">
-          <SidebarTrigger aria-label="Toggle sessions" />
-          <span className="workspace-name">URL Workspace</span>
           {app.notice && (
             <output className="save-notice">
               <Check size={13} />
@@ -122,8 +124,8 @@ export function Workspace() {
         ) : !app.selected ? (
           <section className="welcome">
             <div className="welcome-inner">
-              <h1>Let’s sum it up</h1>
-              <p>Enter a URL to get a clear, concise summary of any webpage.</p>
+              <h1>Let’s get to it</h1>
+              <p>Paste a URL to summarize and understand any content instantly</p>
               <form
                 className="url-form"
                 onSubmit={(e) => {
@@ -132,12 +134,13 @@ export function Workspace() {
                 }}
               >
                 <label className="url-input">
-                  <Link2 size={17} />
+                  <Link size={16} />
                   <input
+                    autoFocus
                     aria-label="Webpage URL"
                     inputMode="url"
                     autoComplete="url"
-                    placeholder="Paste a link to summarize…"
+                    placeholder="https://example.com…"
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                     disabled={!!app.busy}
@@ -151,12 +154,7 @@ export function Workspace() {
                 >
                   {app.busy ? (
                     <LoaderCircle className="spin" size={16} />
-                  ) : (
-                    <>
-                      Summarize
-                      <ArrowUpRight size={16} />
-                    </>
-                  )}
+                  ) : ("Summarize")}
                 </button>
               </form>
               {app.config && !app.config.configured && (
@@ -187,7 +185,7 @@ export function Workspace() {
             <div className="reading-scroll">
               <article className="summary-article">
                 <div className="article-source">
-                  <Link2 size={13} />
+                  <Link size={13} />
                   <a
                     href={session.url}
                     target="_blank"

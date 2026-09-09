@@ -124,9 +124,15 @@ svg {
   flex-direction: row !important;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px !important;
+  padding: 0 20px;
   border-bottom: 1px solid #ffffff09;
 }
+
+.sidebar-top.is-collapsed {
+  justify-content: center;
+  padding: 16px;
+}
+
 .brand {
   display: flex;
   align-items: center;
@@ -218,19 +224,26 @@ svg {
   box-shadow:
     inset 0 1px 8px #e4c7ff14,
     0 0 40px #cc8cfd13;
-  border-radius: 999px;
+  border-radius: 1000px;
   background: #e0ccf020;
   display: flex;
   align-items: center;
   gap: 11px;
-  padding: 13px 17px;
+  padding: 14px 16px;
   flex: 1;
-  color: #c8b4d8;
+  color: #C3C3C3;
 }
+
+
 .url-input input {
   width: 100%;
   font-size: 14px;
 }
+
+.url-input input:focus {
+  outline-style: none;
+}
+
 .mobile-header {
   display: none;
 }
