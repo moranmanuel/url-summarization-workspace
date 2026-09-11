@@ -271,7 +271,7 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <ArrowLeftToLine className="cn-rtl-flip" />
+      <ArrowLeftToLine />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   );

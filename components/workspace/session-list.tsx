@@ -1,9 +1,9 @@
 'use client';
+import { useState } from 'react';
 import {
   Link,
   Plus,
   Search,
-  Layers,
   LoaderCircle,
   MoreHorizontal,
   Copy,
@@ -53,43 +53,45 @@ export function SessionList({
   onDelete: (session: Session) => void;
 }) {
   const { state, isMobile, setOpenMobile } = useSidebar();
+  const [searchOpen, setSearchOpen] = useState(false);
   const collapsed = !isMobile && state === 'collapsed';
   return (
     <Sidebar className="sessions-sidebar">
       <SidebarHeader className={`sidebar-top ${collapsed ? 'is-collapsed' : ''}`}>
         {!collapsed && 
-          <span
-          className="brand"
-          aria-label="URL Workspace"
-          title="URL Workspace"
-          >
-          <img src='/profound.svg' alt='profound' />
-        </span>
+          <a className="brand" href={selected ? '#new-summary' : undefined} aria-label="Profound — New summary" title="Profound — New summary" onClick={(event) => { if (!selected) event.preventDefault(); else { event.preventDefault(); onNew(); } }}>
+            {/* oxlint-disable-next-line next/no-img-element */}
+            <img src="/profound.svg" alt="Profound" />
+          </a>
         }
-        <SidebarTrigger aria-label="collapsed ? 'Expand sidebar' : 'Collapse sidebar'" />
+        <div className="flex items-center gp-1">
+          <button className="icon-button sidebar-icon-button" onClick={() => setSearchOpen((open) => !open)} aria-label={searchOpen ? 'Close search' : 'Search summaries'} aria-pressed={searchOpen}><Search size={16} /></button>
+          <SidebarTrigger className="icon-button sidebar-icon-button" aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'} />
+        </div>
       </SidebarHeader>
 
       {!collapsed && (
         <>
           <SidebarContent>
-            <label className="search-box">
-              <Search size={15} />
-              <input
-                placeholder="Search summaries"
-                aria-label="Search summaries"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-              />
-              {query && (
-                <button
+            {searchOpen && (
+              <label className="search-box">
+                <input
+                  placeholder="Search summaries"
+                  aria-label="Search summaries"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  />
+                {query && (
+                  <button
                   className="clear-search"
                   onClick={() => setQuery('')}
                   aria-label="Clear search"
-                >
-                  ×
-                </button>
-              )}
-            </label>
+                  >
+                    ×
+                  </button>
+                )}
+              </label>
+            )}
             {loading ? (
               <div className="list-skeleton" aria-label="Loading sessions">
                 {[0, 1, 2].map((i) => (

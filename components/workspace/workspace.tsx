@@ -66,7 +66,7 @@ export function Workspace() {
     <SidebarProvider
       className="workspace"
       style={{
-        '--sidebar-width': '252px',
+        '--sidebar-width': '320px',
         '--sidebar-width-icon': '64px'
       } as React.CSSProperties}
     >
@@ -94,6 +94,7 @@ export function Workspace() {
         className={`main-surface ${chatOpen && session ? 'chat-open' : ''}`}
       >
         <header className="workspace-header">
+          <SidebarTrigger className="mobile-menu-trigger border-0 h-8 w-8" aria-label="Open sidebar" />
           {app.notice && (
             <output className="save-notice">
               <Check size={13} />
@@ -136,7 +137,6 @@ export function Workspace() {
                 <label className="url-input">
                   <Link size={16} />
                   <input
-                    autoFocus
                     aria-label="Webpage URL"
                     inputMode="url"
                     autoComplete="url"
