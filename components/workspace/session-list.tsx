@@ -59,13 +59,13 @@ export function SessionList({
     <Sidebar className="sessions-sidebar">
       <SidebarHeader className={`sidebar-top ${collapsed ? 'is-collapsed' : ''}`}>
         {!collapsed && 
-          <a className="brand" href={selected ? '#new-summary' : undefined} aria-label="Profound — New summary" title="Profound — New summary" onClick={(event) => { if (!selected) event.preventDefault(); else { event.preventDefault(); onNew(); } }}>
+          <a className="brand sidebar-icon-button" href={selected ? '#new-summary' : undefined} aria-label="Profound — New summary" title="Profound — New summary" onClick={(event) => { if (!selected) event.preventDefault(); else { event.preventDefault(); onNew(); } }}>
             {/* oxlint-disable-next-line next/no-img-element */}
             <img src="/profound.svg" alt="Profound" />
           </a>
         }
         <div className="flex items-center gp-1">
-          <button className="icon-button sidebar-icon-button" onClick={() => setSearchOpen((open) => !open)} aria-label={searchOpen ? 'Close search' : 'Search summaries'} aria-pressed={searchOpen}><Search size={16} /></button>
+          <button className={`icon-button sidebar-icon-button ${collapsed ? 'hidden' : 'flex'}`} onClick={() => setSearchOpen((open) => !open)} aria-label={searchOpen ? 'Close search' : 'Search summaries'} aria-pressed={searchOpen}><Search size={16} /></button>
           <SidebarTrigger className="icon-button sidebar-icon-button" aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'} />
         </div>
       </SidebarHeader>
@@ -114,7 +114,7 @@ export function SessionList({
                       aria-current={selected === session.id ? 'page' : undefined}
                     >
                       <span className="session-url">
-                        <Link size={12} />
+                        <Link size={16} />
                         <span>{session.url.replace(/^https?:\/\//, '')}</span>
                       </span>
                       <span className="session-title">{session.title}</span>

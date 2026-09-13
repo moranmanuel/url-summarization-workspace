@@ -24,6 +24,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { ArrowLeftToLine } from 'lucide-react';
+import { ArrowRightToLine } from 'lucide-react';
 
 const SIDEBAR_COOKIE_NAME = 'sidebar_state';
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -256,7 +257,8 @@ function SidebarTrigger({
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { toggleSidebar } = useSidebar();
+  const { toggleSidebar, state } = useSidebar();
+  const isOpen = state === 'expanded';
 
   return (
     <Button
@@ -269,11 +271,18 @@ function SidebarTrigger({
         onClick?.(event);
         toggleSidebar();
       }}
+      aria-label={isOpen ? 'Collapse sidebar' : 'Expand sidebar'}
       {...props}
     >
-      <ArrowLeftToLine />
-      <span className="sr-only">Toggle Sidebar</span>
-    </Button>
+      {isOpen ? (
+        <ArrowLeftToLine className="size-4" />
+      ) : (
+        <ArrowRightToLine className="size-4" />
+      )}
+
+      <span className="sr-only">
+        {isOpen ? 'Collapse sidebar' : 'Expand sidebar'}
+      </span>    </Button>
   );
 }
 

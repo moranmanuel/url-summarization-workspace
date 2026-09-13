@@ -93,15 +93,13 @@ export function Workspace() {
       <main
         className={`main-surface ${chatOpen && session ? 'chat-open' : ''}`}
       >
-        <header className="workspace-header">
-          <SidebarTrigger className="mobile-menu-trigger border-0 h-8 w-8" aria-label="Open sidebar" />
-          {app.notice && (
-            <output className="save-notice">
-              <Check size={13} />
-              {app.notice}
-            </output>
-          )}
-        </header>
+        <SidebarTrigger className="mobile-menu-trigger border-0 h-8 w-8" aria-label="Open sidebar" />
+        {app.notice && (
+          <output className="save-notice">
+            <Check size={13} />
+            {app.notice}
+          </output>
+        )}
         {app.error && (
           <div className="error-banner" role="alert">
             <span>{app.error}</span>
