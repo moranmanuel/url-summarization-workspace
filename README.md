@@ -2,6 +2,10 @@
 
 A React + TypeScript practice implementation of the URL summarization frontend challenge. Paste a public webpage URL, watch a **real Gemini response stream**, revisit saved summaries, search the source and summary, and ask follow-up questions in a session-scoped chat.
 
+## Live demo
+
+[Open the deployed URL Workspace demo](https://url-summarization-workspace.manu-moran0710.workers.dev/)
+
 The dark gradient, compact session list, translucent pill controls, reading surface, and chat panel follow the [original Figma reference](https://www.figma.com/design/ltkR4niWxYqLJ0ELvnOhp4/FE-challenge). The layout adapts to small screens with accessible sidebar sheets.
 
 ## Run locally

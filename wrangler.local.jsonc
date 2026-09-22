@@ -6,8 +6,8 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "site-creator-d1",
-      "database_id": "00000000-0000-4000-8000-000000000000",
+      "database_name": "url-workspace-db",
+      "database_id": "056a0d23-cb78-49a5-9a9c-c729ff7de8e4",
       "migrations_dir": "drizzle",
     },
   ],
