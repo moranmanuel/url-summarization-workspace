@@ -9,6 +9,8 @@ import {
   Copy,
   Download,
   Trash2,
+  X,
+  House
 } from 'lucide-react';
 import type { Session } from '@/lib/types';
 import {
@@ -59,9 +61,9 @@ export function SessionList({
     <Sidebar className="sessions-sidebar">
       <SidebarHeader className={`sidebar-top ${collapsed ? 'is-collapsed' : ''}`}>
         {!collapsed && 
-          <a className="brand sidebar-icon-button" href={selected ? '#new-summary' : undefined} aria-label="Profound — New summary" title="Profound — New summary" onClick={(event) => { if (!selected) event.preventDefault(); else { event.preventDefault(); onNew(); } }}>
+          <a className="brand sidebar-icon-button" href={selected ? '#new-summary' : undefined} aria-label="URL Workspace — New summary" title="URL Workspace — New summary" onClick={(event) => { if (!selected) event.preventDefault(); else { event.preventDefault(); onNew(); } }}>
             {/* oxlint-disable-next-line next/no-img-element */}
-            <img src="/profound.svg" alt="Profound" />
+            <House size={20} />
           </a>
         }
         <div className="flex items-center gp-1">
@@ -74,23 +76,26 @@ export function SessionList({
         <>
           <SidebarContent>
             {searchOpen && (
-              <label className="search-box">
-                <input
-                  placeholder="Search summaries"
-                  aria-label="Search summaries"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  />
-                {query && (
-                  <button
-                  className="clear-search"
-                  onClick={() => setQuery('')}
-                  aria-label="Clear search"
-                  >
-                    ×
-                  </button>
-                )}
-              </label>
+              <div className='search-box-container'> 
+                <label className="search-box">
+                  <input
+                    placeholder="Filter by URL or content..."
+                    aria-label="Filter by URL or content..."
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    autoFocus
+                    />
+                  {query && (
+                    <button
+                    className="clear-search"
+                    onClick={() => setQuery('')}
+                    aria-label="Clear search"
+                    >
+                      <X size={16}/>
+                    </button>
+                  )}
+                </label>
+              </div>
             )}
             {loading ? (
               <div className="list-skeleton" aria-label="Loading sessions">

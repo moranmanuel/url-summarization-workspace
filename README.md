@@ -1,6 +1,6 @@
 # URL Workspace
 
-A React + TypeScript practice implementation of the Profound frontend challenge. Paste a public webpage URL, watch a **real Gemini response stream**, revisit saved summaries, search the source and summary, and ask follow-up questions in a session-scoped chat.
+A React + TypeScript practice implementation of the URL summarization frontend challenge. Paste a public webpage URL, watch a **real Gemini response stream**, revisit saved summaries, search the source and summary, and ask follow-up questions in a session-scoped chat.
 
 The dark gradient, compact session list, translucent pill controls, reading surface, and chat panel follow the [original Figma reference](https://www.figma.com/design/ltkR4niWxYqLJ0ELvnOhp4/FE-challenge). The layout adapts to small screens with accessible sidebar sheets.
 
@@ -22,7 +22,7 @@ Open http://localhost:3000. The project uses **Vinext**, which provides Next.js-
 
 1. Create a Gemini API key in [Google AI Studio](https://aistudio.google.com/apikey).
 2. Put it in `.env` as `GEMINI_API_KEY=your-key` and restart the dev server.
-3. Set `GEMINI_MODEL` to a streaming text model available in your account. The default follows the current Gemini documentation (`gemini-3.7-flash`); model access and quotas depend on the account.
+3. Set `GEMINI_MODEL` to a streaming text model available in your account. The default is `gemini-3.6-flash`; model access and quotas depend on the account.
 4. Submit a public, text-heavy article. Verify that text appears progressively and remains after reloading.
 
 The key is read **only on the server**, never embedded in client code or accepted in a browser form. Hosted deployments require the same variables to be configured as server secrets; a local `.env` is never uploaded. An API account may require billing or have limited quota; check your account before use.

@@ -37,7 +37,7 @@ export function Workspace() {
   useWorkspaceTools(app);
   const [url, setUrl] = useState('');
   const [chatOpen, setChatOpen] = useState(false);
-  const [deleting, setDeleting] = useState<Session | null>(null);
+    const [deleting, setDeleting] = useState<Session | null>(null);
   const [deleteBusy, setDeleteBusy] = useState(false);
   const session = app.detail;
   const streaming =
@@ -143,6 +143,7 @@ export function Workspace() {
                     onChange={(e) => setUrl(e.target.value)}
                     disabled={!!app.busy}
                     maxLength={2048}
+                    autoFocus
                   />
                 </label>
                 <button

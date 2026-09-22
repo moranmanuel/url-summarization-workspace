@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 export const metadata: Metadata = {
   title: 'URL Summarization Workspace',
-  icons: { icon: '/profound.svg' },
+  icons: { icon: '/workspace.svg' },
   description:
     'Summarize a webpage, save what matters, and ask follow-up questions.',
 };

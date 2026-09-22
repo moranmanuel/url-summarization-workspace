@@ -13,6 +13,8 @@ export function errorMessage(error: unknown): string {
     (error.name === 'AbortError' || error.name === 'TimeoutError')
   )
     return 'The request was interrupted or took too long. Any partial text has been saved. Please retry.';
+  if (error instanceof Error && error.message)
+    return `The request failed: ${error.message}`;
   return 'Something went wrong. Please try again.';
 }
 export function errorResponse(error: unknown) {
