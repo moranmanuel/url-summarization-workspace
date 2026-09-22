@@ -25,26 +25,39 @@ export async function* generate(
   const model = configuration().model;
   if (!/^[a-zA-Z0-9._-]+$/.test(model))
     throw new AppError('The configured Gemini model is invalid.', 503);
-  let response: Response;
-  try {
-    response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent?alt=sse`,
-      {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-goog-api-key': env.GEMINI_API_KEY!,
-      },
-      body: JSON.stringify({
-        systemInstruction: { parts: [{ text: system }] },
-        contents,
-        generationConfig: { maxOutputTokens: 4096 },
-      }),
+  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent?alt=sse`;
+  let response: Response | undefined;
+  let networkError: unknown;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      response = await fetch(
+        endpoint,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-goog-api-key': env.GEMINI_API_KEY!,
+          },
+          body: JSON.stringify({
+            systemInstruction: { parts: [{ text: system }] },
+            contents,
+            generationConfig: { maxOutputTokens: 4096 },
+          }),
         signal,
-      },
-    );
-  } catch (error) {
-    const detail = error instanceof Error ? error.message : 'network error';
+        },
+      );
+      if (response.ok || (response.status !== 429 && response.status < 500))
+        break;
+      await response.body?.cancel().catch(() => {});
+    } catch (error) {
+      networkError = error;
+      if (signal.aborted) throw error;
+    }
+    if (attempt < 2)
+      await new Promise((resolve) => setTimeout(resolve, 500 * 2 ** attempt));
+  }
+  if (!response) {
+    const detail = networkError instanceof Error ? networkError.message : 'network error';
     throw new AppError(`Could not reach Gemini: ${detail}`, 502);
   }
   if (!response.ok) {
