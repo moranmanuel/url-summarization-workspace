@@ -46,7 +46,11 @@ export async function* generate(
         signal,
         },
       );
-      if (response.ok || (response.status !== 429 && response.status < 500))
+      if (
+        response.ok ||
+        (response.status !== 429 && response.status < 500) ||
+        attempt === 2
+      )
         break;
       await response.body?.cancel().catch(() => {});
     } catch (error) {
@@ -77,7 +81,7 @@ export async function* generate(
             ? 'The configured Gemini model is unavailable. Set GEMINI_MODEL to a model available in your account.'
             : providerMessage
               ? `Gemini could not generate a response: ${providerMessage}`
-              : 'Gemini is unavailable right now. Please try again.';
+              : `Gemini is unavailable right now (HTTP ${response.status}). Please try again.`;
     throw new AppError(message, 502);
   }
   if (!response.body)
