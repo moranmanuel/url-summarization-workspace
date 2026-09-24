@@ -144,7 +144,7 @@ svg {
   filter: blur(200px);
 }
 .sessions-sidebar [data-slot='sidebar-inner'] {
-  background: linear-gradient(180deg, #030305cc, #120d21aa);
+  background: rgb(0 0 0 / 30%);
   border-right: 1px solid rgb(255, 255, 255, 0.2);
 }
 .brand img {
@@ -384,8 +384,6 @@ svg {
   color: #a1a1aa;
   position: absolute;
   right: 0%;
-  height: 32px;
-  width: 32px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -720,7 +718,7 @@ svg {
   padding: 22px 32px 26px;
   display: flex;
   justify-content: center;
-  background: linear-gradient(0deg, #342044, transparent);
+  background: transparent;
   pointer-events: none;
 }
 .chat-open .reading-bottom {
@@ -853,12 +851,7 @@ svg {
 .chat-sheet {
   width: 360px !important;
   max-width: 360px !important;
-  background: linear-gradient(
-    180deg,
-    #040307 0%,
-    #0c0713 45%,
-    #21122e 100%
-  ) !important;
+  background: rgb(0 0 0 / 30%) !important;
   gap: 0 !important;
   border-left: 1px solid #ffffff10 !important;
   box-shadow: -12px 0 50px #0002 !important;

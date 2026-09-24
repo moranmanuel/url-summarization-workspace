@@ -87,11 +87,11 @@ export function SessionList({
                     />
                   {query && (
                     <button
-                    className="clear-search"
+                    className="clear-search icon-button sidebar-icon-button"
                     onClick={() => setQuery('')}
                     aria-label="Clear search"
                     >
-                      <X size={16}/>
+                      <X size={16} />
                     </button>
                   )}
                 </label>
