@@ -14,7 +14,11 @@ import {
   Check,
   KeyRound,
 } from 'lucide-react';
-import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import {
+  SidebarProvider,
+  SidebarTrigger,
+  useSidebar,
+} from '@/components/ui/sidebar';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
   AlertDialog,
@@ -31,6 +35,22 @@ import type { Session } from '@/lib/types';
 import { SessionList } from './session-list';
 import { ChatPanel } from './chat-panel';
 import { Markdown } from './markdown';
+
+function MobileMenuTrigger() {
+  const { state, isMobile, openMobile } = useSidebar();
+  const sidebarIsClosed = isMobile ? !openMobile : state === 'collapsed';
+
+  return (
+    <SidebarTrigger
+      className={
+        sidebarIsClosed
+          ? 'mobile-menu-trigger border-0 h-8 w-8'
+          : 'hidden'
+      }
+      aria-label="Open sidebar"
+    />
+  );
+}
 
 export function Workspace() {
   const app = useWorkspace();
@@ -93,7 +113,7 @@ export function Workspace() {
       <main
         className={`main-surface ${chatOpen && session ? 'chat-open' : ''}`}
       >
-        <SidebarTrigger className="mobile-menu-trigger border-0 h-8 w-8" aria-label="Open sidebar" />
+        <MobileMenuTrigger />
         {app.notice && (
           <output className="save-notice">
             <Check size={13} />
