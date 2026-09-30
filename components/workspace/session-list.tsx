@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import {
   Link,
-  Plus,
   Search,
   LoaderCircle,
   MoreHorizontal,
@@ -68,7 +67,7 @@ export function SessionList({
         }
         <div className="flex items-center gp-1">
           <button className={`icon-button sidebar-icon-button ${collapsed ? 'hidden' : 'flex'}`} onClick={() => setSearchOpen((open) => !open)} aria-label={searchOpen ? 'Close search' : 'Search summaries'} aria-pressed={searchOpen}><Search size={16} /></button>
-          <SidebarTrigger className="icon-button sidebar-icon-button" aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'} />
+          {!isMobile && <SidebarTrigger className="icon-button sidebar-icon-button" aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'} />}
         </div>
       </SidebarHeader>
 
@@ -147,7 +146,7 @@ export function SessionList({
                     </button>
                     <DropdownMenu>
                       <DropdownMenuTrigger
-                        className="session-options icon-button"
+                        className="session-options icon-button button"
                         aria-label={`Actions for ${session.title}`}
                       >
                         <MoreHorizontal size={16} />
@@ -155,7 +154,7 @@ export function SessionList({
                       <DropdownMenuContent
                         align="start"
                         side="right"
-                        className="session-menu"
+                        className="session-menu ring-0"
                       >
                         <DropdownMenuItem
                           disabled={!session.summary}
@@ -194,14 +193,13 @@ export function SessionList({
           </SidebarContent>
           <SidebarFooter>
             <button
-              className="glass-button"
+              className="button glass-button p-4"
               onClick={() => {
                 onNew();
                 setOpenMobile(false);
               }}
               disabled={disabled}
             >
-              <Plus size={15} />
               New summary
             </button>
           </SidebarFooter>

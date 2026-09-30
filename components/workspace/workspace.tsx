@@ -13,6 +13,7 @@ import {
   X,
   Check,
   KeyRound,
+  Menu
 } from 'lucide-react';
 import {
   SidebarProvider,
@@ -44,10 +45,11 @@ function MobileMenuTrigger() {
     <SidebarTrigger
       className={
         sidebarIsClosed
-          ? 'mobile-menu-trigger border-0 h-8 w-8'
+          ? 'button mobile-menu-trigger'
           : 'hidden'
       }
       aria-label="Open sidebar"
+      icon={<Menu className='size-5'/>}
     />
   );
 }
@@ -143,16 +145,18 @@ export function Workspace() {
         ) : !app.selected ? (
           <section className="welcome">
             <div className="welcome-inner">
-              <h1>Let’s get to it</h1>
-              <p>Paste a URL to summarize and understand any content instantly</p>
+              <hgroup className='text-center'>
+                <h1>Let’s get to it</h1>
+                <p>Paste a URL to summarize and understand any content instantly</p>
+              </hgroup>
               <form
-                className="url-form"
+                className="url-form flex gap-x-2 gap-y-4 items-center w-full max-w-109"
                 onSubmit={(e) => {
                   e.preventDefault();
                   if (url.trim()) void app.create(url);
                 }}
               >
-                <label className="url-input">
+                <label className="url-input h-13">
                   <Link size={16} />
                   <input
                     aria-label="Webpage URL"
@@ -167,7 +171,7 @@ export function Workspace() {
                   />
                 </label>
                 <button
-                  className="glass-button"
+                  className="button glass-button px-6"
                   type="submit"
                   disabled={!url.trim() || !!app.busy}
                 >
@@ -274,7 +278,7 @@ export function Workspace() {
                       </span>
                     )}
                     <button
-                      className="glass-button"
+                      className="button glass-button px-6"
                       disabled={!!app.busy}
                       onClick={() => void app.retry(session.id)}
                     >
@@ -340,7 +344,7 @@ export function Workspace() {
           <div className="unavailable">
             <p>This session is unavailable.</p>
             <button
-              className="glass-button"
+              className="button glass-button"
               onClick={() => void app.select(null)}
             >
               New summary

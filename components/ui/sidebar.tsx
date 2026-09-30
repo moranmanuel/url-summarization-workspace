@@ -29,7 +29,7 @@ import { ArrowRightToLine } from 'lucide-react';
 const SIDEBAR_COOKIE_NAME = 'sidebar_state';
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
 const SIDEBAR_WIDTH = '16rem';
-const SIDEBAR_WIDTH_MOBILE = '18rem';
+const SIDEBAR_WIDTH_MOBILE = '320px';
 const SIDEBAR_WIDTH_ICON = '3rem';
 const SIDEBAR_KEYBOARD_SHORTCUT = 'b';
 
@@ -188,7 +188,7 @@ function Sidebar({
           data-sidebar="sidebar"
           data-slot="sidebar"
           data-mobile="true"
-          className="w-(--sidebar-width) bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
+          className="w-(--sidebar-width) data-[side=left]:w-(--sidebar-width) bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
           style={
             {
               '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
@@ -255,8 +255,9 @@ function Sidebar({
 function SidebarTrigger({
   className,
   onClick,
+  icon,
   ...props
-}: React.ComponentProps<typeof Button>) {
+}: React.ComponentProps<typeof Button> & { icon?: React.ReactNode }) {
   const { toggleSidebar, state } = useSidebar();
   const isOpen = state === 'expanded';
 
@@ -274,11 +275,12 @@ function SidebarTrigger({
       aria-label={isOpen ? 'Collapse sidebar' : 'Expand sidebar'}
       {...props}
     >
-      {isOpen ? (
-        <ArrowLeftToLine className="size-4" />
-      ) : (
-        <ArrowRightToLine className="size-4" />
-      )}
+      {icon ??
+        (isOpen ? (
+          <ArrowLeftToLine className="size-4" />
+        ) : (
+          <ArrowRightToLine className="size-4" />
+        ))}
 
       <span className="sr-only">
         {isOpen ? 'Collapse sidebar' : 'Expand sidebar'}
@@ -354,7 +356,7 @@ function SidebarFooter({ className, ...props }: React.ComponentProps<'div'>) {
     <div
       data-slot="sidebar-footer"
       data-sidebar="footer"
-      className={cn('gap-2 p-2 flex flex-col', className)}
+      className={cn('flex flex-col', className)}
       {...props}
     />
   );

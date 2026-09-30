@@ -104,7 +104,7 @@ textarea {
 }
 input::placeholder,
 textarea::placeholder {
-  color: #a1a1aa;
+  color: rgb(255 255 255 / 30%);
 }
 svg {
   flex-shrink: 0;
@@ -143,6 +143,24 @@ svg {
   background: rgb(36 72 96 / 45%);
   filter: blur(200px);
 }
+
+.button {
+  border: 1px solid #cbd5e13d;
+  border-radius: 999px;
+  color: #f4f4f5;
+  background: linear-gradient(180deg, #64748b50, #94a3b85c);
+  box-shadow:
+    inset 0 1px 6px #cbd5e135,
+    0 3px 12px #0002;
+  font-size: 14px;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.button:hover {
+  background-color: #94a3b833;
+}
+
 .sessions-sidebar [data-slot='sidebar-inner'] {
   background: rgb(0 0 0 / 30%);
   /* border-right: 1px solid rgb(255, 255, 255 / 10%); */
@@ -232,30 +250,15 @@ svg {
   color: #a1a1aa;
 }
 [data-slot='sidebar-footer'] {
-  padding: 16px !important;
+  padding: 24px !important;
 }
 .glass-button {
   display: inline-flex;
   justify-content: center;
   align-items: center;
   gap: 8px;
-  border: 1px solid #cbd5e13d;
-  border-radius: 999px;
-  padding: 11px 19px;
-  color: #f4f4f5;
-  background: linear-gradient(180deg, #64748b50, #94a3b85c);
-  box-shadow:
-    inset 0 1px 6px #cbd5e135,
-    0 3px 12px #0002;
-  font-size: 14px;
-  white-space: nowrap;
-  transition:
-    background 0.2s,
-    transform 0.2s;
-}
-.glass-button:hover:not(:disabled) {
-  background-color: #94a3b833;
-  transform: translateY(-1px);
+  height: 52px;
+  padding: 0 24px;
 }
 .main-surface {
   position: relative;
@@ -269,27 +272,23 @@ svg {
   flex: 1;
 }
 .welcome-inner {
-  position: absolute;
-  left: 24.07vw;
-  right: 21.6vw;
-  top: 34.49vh;
-  text-align: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  padding: 32px;
 }
 .welcome h1 {
-  font-size: 25px;
+  font-size: 24px;
   letter-spacing: -0.8px;
   font-weight: 500;
-  margin: 0 0 12px;
+  margin-bottom: 8px;
 }
 .welcome p {
-  font-size: 14px;
+  font-size: 18px;
   color: #a1a1aa;
-  margin: 0 0 28px;
-}
-.url-form {
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 .url-input {
   border: 1px solid #cbd5e136;
@@ -300,10 +299,11 @@ svg {
   background: #e2e8f020;
   display: flex;
   align-items: center;
-  gap: 11px;
+  gap: 12px;
   padding: 14px 16px;
   flex: 1;
   color: #c3c3c3;
+  width: 100%;
 }
 
 .url-input input {
@@ -391,17 +391,60 @@ svg {
 }
 .session-card {
   position: relative;
-  margin: 0 0 5px;
   transition: background 0.15s;
   border-bottom: 1px solid rgb(255, 255, 255, 0.1);
 }
 .session-card:hover {
   background: #ffffff06;
 }
-.session-card.selected {
-  background: linear-gradient(110deg, #64748b1f, #47556928);
-  box-shadow: inset 0 0 0 1px #cbd5e10e;
+
+.session-card {
+  position: relative;
 }
+
+.session-card::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: -2.5rem; /* -right-10 */
+  z-index: -10;
+  width: 125%;
+  aspect-ratio: 1 / 1;
+  transform: translateY(-50%);
+  border-radius: 9999px;
+  background: rgb(69 45 124 / 30%); /* Replace with your accent color */
+  filter: blur(40px); /* blur-2xl */
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 150ms ease, visibility 150ms ease;
+}
+
+.session-card:hover::before {
+  opacity: 0.6;
+  visibility: visible;
+}
+
+.session-card.selected::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: 387px;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 30%);
+  filter: blur(200px);
+  pointer-events: none;
+  z-index: 0;
+} */
+
+.session-card.selected > * {
+  z-index: 1;
+}
+
 .session-select {
   display: flex;
   flex-direction: column;
@@ -419,7 +462,7 @@ svg {
   align-items: center;
   font-size: 12px;
   color: #a1a1aa;
-  max-width: calc(100% - 18px);
+  /* max-width: calc(100% - 18px); */
 }
 .session-url span {
   overflow: hidden;
@@ -962,6 +1005,7 @@ svg {
   box-shadow: inset 0 1px 8px #ffebff13;
 }
 .chat-composer textarea {
+  outline: none;
   width: 100%;
   resize: none;
   font-size: 14px;
@@ -1088,16 +1132,21 @@ svg {
   .mobile-menu-trigger {
     display: inline-flex;
     position: fixed;
-    top: 12px;
-    left: 12px;
+    top: 16px;
+    left: 16px;
     z-index: 60;
-    background: #170d22cc;
-    backdrop-filter: blur(12px);
-    width: 38px;
-    height: 38px;
+    width: 40px;
+    height: 40px;
   }
   .workspace-header {
     padding-left: 58px;
+  }
+  .url-form {
+    flex-direction: column;
+    place-items: flex-start;
+  }
+  .welcome-inner {
+    padding: 32px 16px;
   }
 }
 .generation-state,
