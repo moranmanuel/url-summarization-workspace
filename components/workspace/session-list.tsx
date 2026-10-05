@@ -66,7 +66,7 @@ export function SessionList({
           </a>
         }
         <div className="flex items-center gp-1">
-          <button className={`icon-button sidebar-icon-button ${collapsed ? 'hidden' : 'flex'}`} onClick={() => setSearchOpen((open) => !open)} aria-label={searchOpen ? 'Close search' : 'Search summaries'} aria-pressed={searchOpen}><Search size={16} /></button>
+          {!collapsed && <button className={`icon-button sidebar-icon-button ${collapsed ? 'hidden' : 'flex'}`} onClick={() => setSearchOpen((open) => !open)} aria-label={searchOpen ? 'Close search' : 'Search summaries'} aria-pressed={searchOpen}><Search size={16} /></button>}
           {!isMobile && <SidebarTrigger className="icon-button sidebar-icon-button" aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'} />}
         </div>
       </SidebarHeader>
