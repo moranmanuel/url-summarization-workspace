@@ -1,6 +1,10 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { ArrowUp, MessageCircle, LoaderCircle, Square } from 'lucide-react';
+import {
+  LoaderCircle,
+  MessageCircle,
+  XIcon
+} from 'lucide-react';
 import type { SessionDetail } from '@/lib/types';
 import {
   Sheet,
@@ -12,6 +16,7 @@ import {
 import { Empty, EmptyDescription } from '@/components/ui/empty';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Markdown } from './markdown';
+import { PromptComposer } from './prompt-composer';
 export function ChatPanel({
   session,
   open,
@@ -27,7 +32,7 @@ export function ChatPanel({
   onSend: (content: string) => Promise<boolean>;
   onStop: () => void;
 }) {
-  const [draft, setDraft] = useState('');
+  const [suggestedDraft, setSuggestedDraft] = useState('');
   const scroller = useRef<HTMLDivElement>(null);
   const pinned = useRef(true);
   const isMobile = useIsMobile();
@@ -35,25 +40,20 @@ export function ChatPanel({
     if (pinned.current && scroller.current)
       scroller.current.scrollTop = scroller.current.scrollHeight;
   }, [session.messages]);
-  async function submit() {
-    const text = draft.trim();
-    if (!text || busy) return;
-    setDraft('');
-    pinned.current = true;
-    const success = await onSend(text);
-    if (!success) setDraft(text);
-  }
   return (
     <Sheet open={open} onOpenChange={onOpenChange} modal={isMobile}>
-      <SheetContent className="chat-sheet" showCloseButton>
+      <SheetContent className="chat-sheet" showCloseButton={false}>
         <SheetHeader className="chat-header">
           <SheetTitle>
             <MessageCircle size={16} />
             Chat
           </SheetTitle>
-          <SheetDescription className="chat-source">
-            {session.title}
-          </SheetDescription>
+          <button
+            className='icon-button sidebar-icon-button text-white!' 
+            onClick={() => onOpenChange(!open)}
+          >
+            <XIcon size={16}/>
+          </button>
         </SheetHeader>
         <div
           className="chat-messages"
@@ -76,7 +76,7 @@ export function ChatPanel({
               <button
                 className="suggestion"
                 onClick={() =>
-                  setDraft('What are the most important takeaways?')
+                  setSuggestedDraft('What are the most important takeaways?')
                 }
               >
                 What are the key takeaways?
@@ -105,53 +105,19 @@ export function ChatPanel({
             </div>
           ))}
         </div>
-        <form
-          className="chat-composer"
-          onSubmit={(e) => {
-            e.preventDefault();
-            void submit();
-          }}
-        >
-          <textarea
-            aria-label="Ask about this summary"
+        <div className='sidechat-prompt-container'>
+          <PromptComposer
+            type="sidechat"
             placeholder="Ask me about this summary…"
-            value={draft}
-            maxLength={6000}
-            rows={2}
-            onChange={(e) => setDraft(e.target.value)}
-            onKeyDown={(e) => {
-              if (
-                e.key === 'Enter' &&
-                !e.shiftKey &&
-                !e.nativeEvent.isComposing
-              ) {
-                e.preventDefault();
-                void submit();
-              }
+            busy={busy}
+            suggestedDraft={suggestedDraft}
+            onSubmit={async (text) => {
+              pinned.current = true;
+              return onSend(text);
             }}
+            onStop={onStop}
           />
-          <div className="composer-bottom">
-            <span>Grounded in this webpage</span>
-            {busy ? (
-              <button
-                className="send-button"
-                type="button"
-                aria-label="Stop response"
-                onClick={onStop}
-              >
-                <Square size={12} />
-              </button>
-            ) : (
-              <button
-                className="send-button"
-                aria-label="Send question"
-                disabled={!draft.trim()}
-              >
-                <ArrowUp size={17} />
-              </button>
-            )}
-          </div>
-        </form>
+        </div>
       </SheetContent>
     </Sheet>
   );

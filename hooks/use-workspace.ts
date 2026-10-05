@@ -10,7 +10,6 @@ export function useWorkspace() {
   const [loading, setLoading] = useState(true);
   const [detailLoading, setDetailLoading] = useState(false);
   const [error, setError] = useState('');
-  const [notice, setNotice] = useState('');
   const [busy, setBusy] = useState<{
     kind: 'summary' | 'chat';
     id: string | null;
@@ -129,7 +128,6 @@ export function useWorkspace() {
     active.current = { kind, id };
     setBusy(active.current);
     setError('');
-    setNotice('');
     const abort = new AbortController();
     controller.current = abort;
     let currentId = id,
@@ -172,7 +170,6 @@ export function useWorkspace() {
           } else if (event.type === 'done') {
             if (event.session) updateSession(event.session);
             if (event.message) updateMessage(event.message);
-            setNotice(kind === 'summary' ? 'Summary saved' : 'Reply saved');
           } else if (event.type === 'error') {
             success = false;
             if (event.session) updateSession(event.session);
@@ -218,7 +215,6 @@ export function useWorkspace() {
       cache.current.delete(id);
       setSessions((items) => items.filter((s) => s.id !== id));
       if (selectedRef.current === id) void select(null);
-      setNotice('Session deleted');
       return true;
     } catch (e) {
       setError((e as Error).message);
@@ -235,8 +231,6 @@ export function useWorkspace() {
     detailLoading,
     error,
     setError,
-    notice,
-    setNotice,
     busy,
     config,
     select,

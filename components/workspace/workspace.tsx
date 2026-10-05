@@ -1,12 +1,10 @@
 'use client';
 import { useState } from 'react';
 import {
-  ArrowUpRight,
   Link,
   ExternalLink,
   Copy,
   Download,
-  MessageCircle,
   LoaderCircle,
   RotateCcw,
   Square,
@@ -36,6 +34,7 @@ import type { Session } from '@/lib/types';
 import { SessionList } from './session-list';
 import { ChatPanel } from './chat-panel';
 import { Markdown } from './markdown';
+import { PromptComposer } from './prompt-composer';
 
 function MobileMenuTrigger() {
   const { state, isMobile, openMobile } = useSidebar();
@@ -67,7 +66,6 @@ export function Workspace() {
   async function copy(s: Session) {
     try {
       await navigator.clipboard.writeText(s.summary);
-      app.setNotice('Summary copied');
     } catch {
       app.setError('Clipboard access is unavailable. Use Download instead.');
     }
@@ -82,7 +80,6 @@ export function Workspace() {
     a.download = `${s.title.replace(/[^a-z0-9]+/gi, '-').slice(0, 80) || 'summary'}.md`;
     a.click();
     setTimeout(() => URL.revokeObjectURL(href), 1000);
-    app.setNotice('Summary downloaded');
   }
   return (
     <SidebarProvider
@@ -116,12 +113,6 @@ export function Workspace() {
         className={`main-surface ${chatOpen && session ? 'chat-open' : ''}`}
       >
         <MobileMenuTrigger />
-        {app.notice && (
-          <output className="save-notice">
-            <Check size={13} />
-            {app.notice}
-          </output>
-        )}
         {app.error && (
           <div className="error-banner" role="alert">
             <span>{app.error}</span>
@@ -327,16 +318,16 @@ export function Workspace() {
                   )}
                 </div>
               ) : session.summary && !chatOpen ? (
-                <button
-                  className="open-composer"
-                  onClick={() => setChatOpen(true)}
-                >
-                  <MessageCircle size={16} />
-                  <span>Ask me about this summary…</span>
-                  <span className="send-button">
-                    <ArrowUpRight size={16} />
-                  </span>
-                </button>
+                <PromptComposer
+                  type="workspace"
+                  placeholder="Ask me about this summary…"
+                  busy={!!app.busy}
+                  onSubmit={async (text) => {
+                    setChatOpen(true);
+                    return app.chat(session.id, text);
+                  }}
+                  onStop={app.stop}
+                />
               ) : null}
             </div>
           </>

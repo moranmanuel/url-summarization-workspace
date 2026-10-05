@@ -65,7 +65,7 @@ function SheetContent({
             render={
               <Button
                 variant="ghost"
-                className="absolute top-3 right-3"
+                className="absolute top-1/2 -translate-y-1/2 right-3 border-0"
                 size="icon-sm"
               />
             }
@@ -83,7 +83,7 @@ function SheetHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       data-slot="sheet-header"
-      className={cn('gap-0.5 p-4 flex flex-col', className)}
+      className={cn('gap-0.5 p-4 flex flex-col center', className)}
       {...props}
     />
   );
@@ -104,7 +104,7 @@ function SheetTitle({ className, ...props }: SheetPrimitive.Title.Props) {
     <SheetPrimitive.Title
       data-slot="sheet-title"
       className={cn(
-        'text-foreground text-base font-medium cn-font-heading',
+        'text-foreground text-base font-medium cn-font-heading h-full',
         className,
       )}
       {...props}
