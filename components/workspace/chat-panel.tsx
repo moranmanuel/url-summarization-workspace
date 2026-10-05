@@ -84,24 +84,26 @@ export function ChatPanel({
             </Empty>
           )}
           {session.messages.map((message) => (
-            <div key={message.id} className={`chat-message ${message.role}`}>
-              <span className="message-role">
-                {message.role === 'user' ? 'You' : 'Assistant'}
-              </span>
-              {message.content ? (
-                <Markdown content={message.content} />
-              ) : message.status === 'streaming' ? (
-                <span className="thinking">
-                  <LoaderCircle className="spin" size={14} />
-                  Thinking…
+            <div className='flex w-full justify-end'>
+              <div key={message.id} className={`chat-message ${message.role}`}>
+                <span className="message-role">
+                  {message.role === 'user' ? 'You' : 'Assistant'}
                 </span>
-              ) : null}
-              {message.status === 'streaming' && message.content && (
-                <span className="stream-cursor" />
-              )}
-              {message.error && (
-                <output className="message-error">{message.error}</output>
-              )}
+                {message.content ? (
+                  <Markdown content={message.content} />
+                ) : message.status === 'streaming' ? (
+                  <span className="thinking">
+                    <LoaderCircle className="spin" size={14} />
+                    Thinking…
+                  </span>
+                ) : null}
+                {message.status === 'streaming' && message.content && (
+                  <span className="stream-cursor" />
+                )}
+                {message.error && (
+                  <output className="message-error">{message.error}</output>
+                )}
+              </div>
             </div>
           ))}
         </div>

@@ -1,15 +1,15 @@
 'use client';
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import {
   Link,
   ExternalLink,
   Copy,
   Download,
+  MessageCircle,
   LoaderCircle,
   RotateCcw,
   Square,
   X,
-  Check,
   KeyRound,
   Menu
 } from 'lucide-react';
@@ -113,6 +113,16 @@ export function Workspace() {
         className={`main-surface ${chatOpen && session ? 'chat-open' : ''}`}
       >
         <MobileMenuTrigger />
+        {session && !chatOpen && (
+          <button
+            className="button sidechat-trigger"
+            type="button"
+            aria-label="Open chat"
+            onClick={() => setChatOpen(true)}
+          >
+            <MessageCircle size={20} />
+          </button>
+        )}
         {app.error && (
           <div className="error-banner" role="alert">
             <span>{app.error}</span>

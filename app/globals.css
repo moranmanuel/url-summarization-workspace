@@ -165,6 +165,13 @@ svg {
   background: rgb(0 0 0 / 30%);
   /* border-right: 1px solid rgb(255, 255, 255 / 10%); */
 }
+.sessions-sidebar[data-mobile='true'] {
+  background: rgb(0 0 0);
+}
+.mobile-sidebar-overlay {
+  background: rgb(0 0 0 / 33%) !important;
+  backdrop-filter: none !important;
+}
 .brand img {
   width: 18.46px;
   height: 18.46px;
@@ -194,6 +201,18 @@ svg {
 }
 .mobile-menu-trigger {
   display: none;
+}
+.sidechat-trigger {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
 }
 .sidebar-top {
   height: 64px;
@@ -921,6 +940,7 @@ svg {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  padding-bottom: 160px;
 }
 .chat-empty {
   height: 100%;
@@ -954,7 +974,9 @@ svg {
   background: linear-gradient(110deg, #82619e37, #a77cc02c);
   border: 1px solid #bd9ad72a;
   border-radius: 26px;
-  padding: 16px 24px;
+  padding: 15px 24px;
+  width: fit-content;
+  justify-self: right;
 }
 .chat-message.user .message-role {
   display: none;
@@ -1019,6 +1041,12 @@ svg {
     0 12px 40px rgb(0 0 0 / 35%),
     inset 0 1px 0 rgb(255 255 255 / 8%);
   backdrop-filter: blur(7px);
+}
+.chat-composer-workspace {
+  max-width: 440px;
+}
+.chat-composer-sidechat {
+  max-width: 368px; 
 }
 .composer-row {
   display: flex;
@@ -1272,6 +1300,9 @@ svg {
   }
   .welcome-inner {
     padding: 32px 16px;
+  }
+  .chat-composer-workspace {
+        max-width: calc(100vw - 32px);
   }
 }
 .generation-state,

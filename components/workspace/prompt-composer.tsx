@@ -67,7 +67,7 @@ export function PromptComposer({
 
   return (
     <form
-      className={`chat-composer ${type == 'workspace' ? 'max-w-110' : 'max-w-92'}`}
+      className={`chat-composer ${type == 'workspace' && 'chat-composer-workspace'} ${type == 'sidechat' && 'chat-composer-sidechat'}`}
       onSubmit={(event) => {
         event.preventDefault();
         void submit();
