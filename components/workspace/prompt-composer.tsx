@@ -24,6 +24,7 @@ export function PromptComposer({
   const [fileMenuOpen, setFileMenuOpen] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const fileInput = useRef<HTMLInputElement>(null);
+  const textarea = useRef<HTMLTextAreaElement>(null);
 
   const imageAttachments = useMemo(
     () =>
@@ -51,6 +52,14 @@ export function PromptComposer({
     },
     [imageAttachments],
   );
+
+  useEffect(() => {
+    const element = textarea.current;
+    if (!element) return;
+
+    element.style.height = '0px';
+    element.style.height = `${element.scrollHeight}px`;
+  }, [draft]);
 
   async function submit() {
     const text = draft.trim();
@@ -147,6 +156,7 @@ export function PromptComposer({
           </button>
         </div>
         <textarea
+          ref={textarea}
           aria-label={placeholder}
           placeholder={placeholder}
           value={draft}

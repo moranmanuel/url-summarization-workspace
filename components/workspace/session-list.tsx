@@ -157,26 +157,28 @@ export function SessionList({
                         className="session-menu ring-0"
                       >
                         <DropdownMenuItem
+                          variant="copy"
                           disabled={!session.summary}
                           onClick={() => onCopy(session)}
                         >
                           <Copy />
-                          Copy summary
+                          Copy
                         </DropdownMenuItem>
                         <DropdownMenuItem
+                          variant="download"
                           disabled={!session.summary}
                           onClick={() => onDownload(session)}
                         >
                           <Download />
-                          Download Markdown
+                          Download
                         </DropdownMenuItem>
                         <DropdownMenuItem
-                          variant="destructive"
+                          variant="delete"
                           disabled={disabled}
                           onClick={() => onDelete(session)}
                         >
                           <Trash2 />
-                          Delete session
+                          Delete
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
